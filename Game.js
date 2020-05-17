@@ -19,9 +19,9 @@ Game.prototype.init = function(canvasWidth, canvasHeight, imageManager, soundMan
 	this.mainBall = new MainBall(this.pivots, this.canvasWidth/2, this.canvasHeight * 4/7, this.canvasWidth, this.canvasHeight, this.soundManager);
 	this.mainBalls.push(this.mainBall);
 	
-	this.drawables.push(this.mainBalls);
 	this.drawables.push(this.pivots);
-
+	this.drawables.push(this.mainBalls);
+	
 	this.isMouseDown = false;
 
 }
@@ -33,7 +33,7 @@ Game.prototype.update = function(dt) {
 		let lastY = this.pivots[this.pivots.length-1].y;
 		let nextDis = Math.random() * this.canvasWidth *3/10 + this.canvasWidth / 25;
 		this.pivots.push(new Pivot(this.getRandomPivotX(),  lastY - nextDis, this.getRandomPivotRadius()));
-		if (nextDis >= 80) {
+		if (nextDis >= this.canvasWidth/5) {
 			this.pivots.push(new Pivot(this.getRandomPivotX(), lastY - nextDis, this.getRandomPivotRadius()));			
 		}
 	}

@@ -7,6 +7,8 @@ GameEngine.prototype.init = function(game, imageManager, soundManager, fps) {
 		this.theCanvas.width *=2;
 		this.theCanvas.height *=2;
 	}
+			this.theCanvas.width *=2;
+		this.theCanvas.height *=2;
 	this.context = this.theCanvas.getContext("2d");
 	this.theCanvas.style.display = "block";
 	this.addListeners();
