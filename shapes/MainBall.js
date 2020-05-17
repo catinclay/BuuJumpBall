@@ -8,7 +8,7 @@ function MainBall(pivots, posX, posY, canvasWidth, canvasHeight, soundManager) {
 		this.accelX = 0;
 		this.accelY = 0;
 		this.color = "#0000FF";
-		this.radius = 10;
+		this.radius = canvasWidth/40;
  		this.canvasWidth = canvasWidth;
  		this.canvasHeight = canvasHeight;
  		this.soundManager = soundManager;
@@ -20,14 +20,14 @@ function MainBall(pivots, posX, posY, canvasWidth, canvasHeight, soundManager) {
 		this.targetY = 0;
 		this.hasTarget = false;
 
-		this.defaultChargingSpeed = 1;
-		this.currentChargingSpeed = 1;
+		this.defaultChargingSpeed = canvasWidth/400;
+		this.currentChargingSpeed = canvasWidth/400;
 		this.isCharging = false;
 		this.chargingDistance = 0;
 
-		this.baseLine = posY+ 50;
+		this.baseLine = posY+ canvasWidth/8;
 
-		this.deadLine = posY + 150;
+		this.deadLine = posY + canvasWidth*3/8;
 
 		this.score = 0;
 		this.isGameOver = false;
@@ -86,7 +86,7 @@ MainBall.prototype.update = function() {
 
 	if (this.isCharging) {
 		this.chargingDistance+=this.currentChargingSpeed;
-		this.currentChargingSpeed = this.currentChargingSpeed >= 3.5 ? 3.5 : this.currentChargingSpeed * 1.03;
+		this.currentChargingSpeed = this.currentChargingSpeed >= this.canvasHeight/200 ? this.canvasHeight/200 : this.currentChargingSpeed * 1.03;
 	}
 
 	if (this.hasTarget) {
@@ -100,14 +100,14 @@ MainBall.prototype.update = function() {
 	}
 
 	if(this.y - this.baseLine < 0) {
-		this.camGoTo(this.y + (this.baseLine - this.y)/20 + 0.5);
+		this.camGoTo(this.y + (this.baseLine - this.y)/20 + this.canvasWidth/800);
 	}
 
-	this.deadLine -= 0.1 + Math.sqrt(this.score/500)*2/3;
+	this.deadLine -= this.canvasHeight/4000 + Math.sqrt(this.score)*2/3;
 
 	if (this.deadLine < this.y) {
 		this.isGameOver = true;
-		alert("Score: " + Math.floor(this.score/100));
+		alert("Score: " + Math.floor(this.score*5));
 	}
 }
 
@@ -123,7 +123,7 @@ MainBall.prototype.camGoTo = function(line) {
 	if (this.deadLine > this.canvasHeight) {
 		this.deadLine = this.canvasHeight;
 	}
-	this.score += dis;
+	this.score += dis/this.canvasWidth;
 }
 
 MainBall.prototype.dis = function(p) {
@@ -156,7 +156,7 @@ MainBall.prototype.drawToContext = function(theContext) {
 		theContext.beginPath();
 		theContext.strokeStyle = "#00000066";
 		theContext.arc(this.x, this.y, this.chargingDistance, 0, 2 * Math.PI);
-		theContext.lineWidth = 4;
+		theContext.lineWidth = 6;
 		theContext.stroke();
 	}
 

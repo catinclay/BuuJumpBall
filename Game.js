@@ -11,12 +11,12 @@ Game.prototype.init = function(canvasWidth, canvasHeight, imageManager, soundMan
 	
 
 	this.pivots = [];
-	this.pivots.push(new Pivot(Math.random() * (canvasWidth-100) + 50, this.canvasHeight - 400, this.getRandomPivotRadius()));
+	this.pivots.push(new Pivot(this.getRandomPivotX(), this.canvasHeight*3/7, this.getRandomPivotRadius()));
 
 
 	
 	this.mainBalls = [];
-	this.mainBall = new MainBall(this.pivots, this.canvasWidth/2, this.canvasHeight - 300, this.canvasWidth, this.canvasHeight, this.soundManager);
+	this.mainBall = new MainBall(this.pivots, this.canvasWidth/2, this.canvasHeight * 4/7, this.canvasWidth, this.canvasHeight, this.soundManager);
 	this.mainBalls.push(this.mainBall);
 	
 	this.drawables.push(this.mainBalls);
@@ -29,19 +29,23 @@ Game.prototype.init = function(canvasWidth, canvasHeight, imageManager, soundMan
 Game.prototype.update = function(dt) {
 	this.mainBall.setIsMouseDown(this.isMouseDown);
 	this.mainBall.update();
-	if (this.pivots[this.pivots.length-1].y >= 15) {
+	if (this.pivots[this.pivots.length-1].y >= this.canvasWidth /25) {
 		let lastY = this.pivots[this.pivots.length-1].y;
-		let nextDis = Math.random()*120 + 15;
-		this.pivots.push(new Pivot(Math.random() * (this.canvasWidth-100) + 50, lastY - Math.random()*120 - 15, this.getRandomPivotRadius()));
+		let nextDis = Math.random() * this.canvasWidth *3/10 + this.canvasWidth / 25;
+		this.pivots.push(new Pivot(this.getRandomPivotX(),  lastY - nextDis, this.getRandomPivotRadius()));
 		if (nextDis >= 80) {
-			this.pivots.push(new Pivot(Math.random() * (this.canvasWidth-100) + 50, lastY - Math.random()*120 - 15, this.getRandomPivotRadius()));			
+			this.pivots.push(new Pivot(this.getRandomPivotX(), lastY - nextDis, this.getRandomPivotRadius()));			
 		}
 	}
 
 }
 
+Game.prototype.getRandomPivotX = function() {
+	return Math.random() * (this.canvasWidth*3/4) + this.canvasWidth / 8;
+}
+
 Game.prototype.getRandomPivotRadius = function() {
-	return Math.random()*8 + Math.random()*8 + 2;
+	return Math.random()* this.canvasWidth / 50+ Math.random() * this.canvasWidth / 50 + this.canvasWidth / 200;
 }
 
 Game.prototype.getDrawables = function() {
