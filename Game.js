@@ -11,7 +11,7 @@ Game.prototype.init = function(canvasWidth, canvasHeight, imageManager, soundMan
 	
 
 	this.pivots = [];
-	this.pivots.push(new Pivot(Math.random() * (canvasWidth-100) + 50, 300, this.getRandomPivotRadius()));
+	this.pivots.push(new Pivot(Math.random() * (canvasWidth-100) + 50, this.canvasHeight - 400, this.getRandomPivotRadius()));
 
 
 	
