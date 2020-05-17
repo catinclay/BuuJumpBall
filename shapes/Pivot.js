@@ -39,5 +39,5 @@ Pivot.prototype.drawToContext = function(theContext) {
 }
 
 Pivot.prototype.shouldDestroy = function(theContext) {
-	return this.destroySoon || this.y >= 1000;
+	return this.destroySoon || this.y >= 2000;
 }
